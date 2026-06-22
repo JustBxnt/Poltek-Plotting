@@ -1,0 +1,1 @@
+<?php $db = new PDO("sqlite:c:/xampp/htdocs/plot/database/database.sqlite"); $count = $db->query("SELECT count(*) FROM bookings")->fetchColumn(); echo "Count: " . $count . "\n"; $latest = $db->query("SELECT * FROM bookings ORDER BY id DESC LIMIT 1")->fetch(PDO::FETCH_ASSOC); if ($latest) { print_r($latest); }
