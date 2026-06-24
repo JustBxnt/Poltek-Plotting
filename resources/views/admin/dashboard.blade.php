@@ -10,14 +10,12 @@
 <body>
     <div class="page-shell admin-shell">
         <header class="topbar">
-            <div class="brand">
+            <a href="/" class="brand">
                 <img src="{{ asset('images/logo-universitas.png') }}" alt="Logo Universitas" class="brand-logo">
-                <div class="brand-text">
-                    <h1>Politeknik Negeri Malang</h1>
-                    <p>Dashboard admin</p>
-                </div>
-            </div>
-            <nav class="topnav">
+                <span>Politeknik Negeri Malang</span>
+            </a>
+            <nav class="nav">
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema">&#9789;</button>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="btn-secondary">Keluar</button>
@@ -115,5 +113,30 @@
             </div>
         </section>
     </div>
+<script>
+    (function() {
+        const html = document.documentElement;
+        const toggle = document.getElementById('themeToggle');
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            if (toggle) toggle.innerHTML = '&#9728;';
+        }
+        if (toggle) {
+            toggle.addEventListener('click', function() {
+                const isDark = html.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    html.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    toggle.innerHTML = '&#9789;';
+                } else {
+                    html.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    toggle.innerHTML = '&#9728;';
+                }
+            });
+        }
+    })();
+</script>
 </body>
 </html>

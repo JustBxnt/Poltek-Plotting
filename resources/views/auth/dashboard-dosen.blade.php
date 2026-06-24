@@ -4,22 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Dosen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
-<body>
+<body class="auth-page">
     <div class="page-shell">
+        <div class="bg-blob bg-blob-1"></div>
+        <div class="bg-blob bg-blob-2"></div>
         <header class="topbar">
-            <div class="brand">
+            <a href="/" class="brand">
                 <img src="{{ asset('images/logo-universitas.png') }}" alt="Logo Universitas" class="brand-logo">
-                <div class="brand-text">
-                    <h1>Politeknik Negeri Malang</h1>
-                    <p>Portal resmi kampus untuk akses dosen</p>
-                </div>
-            </div>
-            <nav class="topnav">
-                <a href="{{ url('/') }}">Beranda</a>
-                <a href="{{ route('building.choose') }}">Pilih Gedung</a>
+                <span>Politeknik Negeri Malang</span>
+            </a>
+            <nav class="nav">
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema">&#9789;</button>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="btn-secondary">Keluar</button>
@@ -29,19 +27,17 @@
 
         <section class="hero">
             <div class="hero-copy">
-                <p class="eyebrow">Selamat Datang</p>
+                <div class="hero-badge">Akun Terverifikasi</div>
+                <p class="eyebrow">Selamat Datang, {{ Auth::user()->name }}!</p>
                 <h2>Dashboard Dosen</h2>
                 <p>Halo, {{ Auth::user()->name }}. Anda telah masuk sebagai <strong>{{ session('role', 'dosen') }}</strong>. Gunakan halaman ini untuk melihat akses fasilitas dan melanjutkan booking gedung yang tersedia.</p>
                 <div class="hero-actions">
                     <a href="{{ route('building.choose') }}" class="btn-primary">Pilih Gedung</a>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="btn-secondary">Keluar</button>
-                    </form>
                 </div>
             </div>
             <div class="hero-visual">
                 <div class="visual-card">
+                    <div class="visual-card-accent"></div>
                     <img src="{{ asset('images/campus.jpg') }}" alt="Ilustrasi Kampus" class="campus-illustration">
                 </div>
             </div>
@@ -49,35 +45,58 @@
 
         <section class="info-grid">
             <div class="card">
+                <div class="card-accent"></div>
+                <div class="card-icon">&#128100;</div>
                 <h3>Informasi Akun</h3>
+                <p>Identitas yang sedang aktif pada sesi login ini.</p>
                 <ul class="detail-list">
                     <li class="detail-item"><strong>Nama</strong><span>{{ Auth::user()->name }}</span></li>
                     <li class="detail-item"><strong>Email</strong><span>{{ Auth::user()->email }}</span></li>
-                    <li class="detail-item"><strong>Peran</strong><span>Dosen</span></li>
+                    <li class="detail-item"><strong>Peran</strong><span class="role-badge">Dosen</span></li>
                 </ul>
             </div>
             <div class="card">
+                <div class="card-accent"></div>
+                <div class="card-icon">&#9881;</div>
                 <h3>Menu Cepat</h3>
                 <p>Gunakan menu berikut untuk langsung menuju fitur penting kampus.</p>
                 <ul class="detail-list">
-                    <li class="detail-item"><strong>Pilih Gedung</strong><span><a href="{{ route('building.choose') }}">Masuk</a></span></li>
-                    <li class="detail-item"><strong>Beranda</strong><span><a href="{{ url('/') }}">Kembali</a></span></li>
-                    <li class="detail-item">
-                        <strong>Keluar</strong>
-                        <span>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="btn-secondary">Logout</button>
-                            </form>
-                        </span>
-                    </li>
+                    <li class="detail-item"><strong>Pilih Gedung</strong><span><a href="{{ route('building.choose') }}" class="detail-link">Masuk &#8599;</a></span></li>
+                    <li class="detail-item"><strong>Beranda</strong><span><a href="{{ url('/') }}" class="detail-link">Kembali &#8599;</a></span></li>
                 </ul>
             </div>
             <div class="card">
+                <div class="card-accent"></div>
+                <div class="card-icon">&#127979;</div>
                 <h3>Akses Dosen</h3>
                 <p>Dosen dapat memilih gedung dan mengajukan booking ruangan untuk kebutuhan akademik, rapat, dan kegiatan kampus.</p>
             </div>
         </section>
     </div>
+<script>
+    (function() {
+        const html = document.documentElement;
+        const toggle = document.getElementById('themeToggle');
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            if (toggle) toggle.innerHTML = '&#9728;';
+        }
+        if (toggle) {
+            toggle.addEventListener('click', function() {
+                const isDark = html.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    html.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    toggle.innerHTML = '&#9789;';
+                } else {
+                    html.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    toggle.innerHTML = '&#9728;';
+                }
+            });
+        }
+    })();
+</script>
 </body>
 </html>

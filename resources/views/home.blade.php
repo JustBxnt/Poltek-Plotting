@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Universitas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 <body class="home-page">
@@ -18,6 +18,7 @@
                 <a href="#" class="active">Beranda</a>
                 <a href="{{ route('visi-misi') }}">Visi & Misi</a>
                 <a href="#" class="login-btn" data-login-modal-open>Login</a>
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema">&#9789;</button>
             </nav>
         </div>
 
@@ -46,7 +47,7 @@
             <div class="info-panel">
                 <div class="panel">
                     <h3>Informasi Kampus</h3>
-                    <p>Politeknik Negeri Malang menyediakan sarana prasarana yang dapat digunakan untuk berbagai acara kampus maupun umum. Hal ini meliputi ruang rapat yang terdapat pada gedung-gedung kampus serta fasilitas yang tersedia di tiap ruangan.</p>
+                    <p>Politeknik Negeri Malang menyediakan sarana dan prasarana yang dapat digunakan untuk berbagai acara kampus maupun umum. Hal ini meliputi ruang rapat yang terdapat pada gedung-gedung kampus serta fasilitas yang tersedia di tiap ruangan.</p>
                 </div>
             </div>
         </section>
@@ -69,6 +70,30 @@
     </div>
 
     <script>
+        (function() {
+            const html = document.documentElement;
+            const toggle = document.getElementById('themeToggle');
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark') {
+                html.setAttribute('data-theme', 'dark');
+                if (toggle) toggle.innerHTML = '&#9728;';
+            }
+            if (toggle) {
+                toggle.addEventListener('click', function() {
+                    const isDark = html.getAttribute('data-theme') === 'dark';
+                    if (isDark) {
+                        html.removeAttribute('data-theme');
+                        localStorage.setItem('theme', 'light');
+                        toggle.innerHTML = '&#9789;';
+                    } else {
+                        html.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('theme', 'dark');
+                        toggle.innerHTML = '&#9728;';
+                    }
+                });
+            }
+        })();
+
         const loginModal = document.getElementById('loginModal');
         const openButtons = document.querySelectorAll('[data-login-modal-open]');
         const closeButton = document.querySelector('[data-login-modal-close]');

@@ -8,6 +8,7 @@ use App\Models\Booking;
 use App\Models\Building;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Auth;
 
 $ensureBookingSchema = function (): void {
     if (! Schema::hasColumn('buildings', 'kind')) {
@@ -243,6 +244,17 @@ $ensurePublicFacilities = function () use ($publicFacilityDefinitions, $ensureBo
 };
 
 Route::get('/dashboard/umum', function () use ($ensurePublicFacilities) {
+    if (!Auth::check()) {
+        return redirect()->route('login');
+    }
+
+    $role = session('role');
+    if ($role === 'mahasiswa') {
+        return redirect()->route('profile');
+    } elseif ($role === 'dosen') {
+        return redirect()->route('dashboard.dosen');
+    }
+
     return view('auth.dashboard-umum', [
         'publicFacilities' => $ensurePublicFacilities(),
     ]);

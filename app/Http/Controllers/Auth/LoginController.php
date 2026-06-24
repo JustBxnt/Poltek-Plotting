@@ -56,11 +56,33 @@ class LoginController extends Controller
 
     public function showProfile()
     {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        $role = session('role');
+        if ($role === 'dosen') {
+            return redirect()->route('dashboard.dosen');
+        } elseif ($role === 'umum') {
+            return redirect()->route('dashboard.umum');
+        }
+
         return view('auth.profile');
     }
 
     public function showDosenDashboard()
     {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        $role = session('role');
+        if ($role === 'mahasiswa') {
+            return redirect()->route('profile');
+        } elseif ($role === 'umum') {
+            return redirect()->route('dashboard.umum');
+        }
+
         return view('auth.dashboard-dosen');
     }
 

@@ -7,18 +7,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
-<body>
+<body class="auth-page">
     <div class="page-shell">
+        <div class="bg-blob bg-blob-1"></div>
+        <div class="bg-blob bg-blob-2"></div>
         <header class="topbar">
-            <div class="brand">
+            <a href="/" class="brand">
                 <img src="{{ asset('images/logo-universitas.png') }}" alt="Logo Universitas" class="brand-logo">
-                <div class="brand-text">
-                    <h1>Politeknik Negeri Malang</h1>
-                    <p>Portal resmi kampus untuk akses mahasiswa</p>
-                </div>
-            </div>
-            <nav class="topnav">
+                <span>Politeknik Negeri Malang</span>
+            </a>
+            <nav class="nav">
                 <a href="{{ url('/') }}">Beranda</a>
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema">&#9789;</button>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="btn-secondary">Keluar</button>
@@ -49,6 +49,7 @@
             </div>
 
             <div class="card building-card">
+                <div class="card-accent"></div>
                 <div class="building-list">
                     @forelse ($buildings as $building)
                         <a class="building-item" href="{{ route('building.show', ['code' => $building->code]) }}">
@@ -65,5 +66,30 @@
             </div>
         </section>
     </div>
+<script>
+    (function() {
+        const html = document.documentElement;
+        const toggle = document.getElementById('themeToggle');
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            if (toggle) toggle.innerHTML = '&#9728;';
+        }
+        if (toggle) {
+            toggle.addEventListener('click', function() {
+                const isDark = html.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    html.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    toggle.innerHTML = '&#9789;';
+                } else {
+                    html.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    toggle.innerHTML = '&#9728;';
+                }
+            });
+        }
+    })();
+</script>
 </body>
 </html>

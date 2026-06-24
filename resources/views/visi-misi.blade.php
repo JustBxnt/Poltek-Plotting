@@ -18,15 +18,19 @@
                 <a href="{{ url('/') }}">Beranda</a>
                 <a href="{{ route('visi-misi') }}" class="active">Visi & Misi</a>
                 <a href="#" class="login-btn" data-login-modal-open>Login</a>
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema">&#9789;</button>
             </nav>
         </div>
 
         <section class="hero">
             <div class="hero-card">
                 <h1 class="hero-title">Visi Dan Misi</h1>
-                <p class="hero-text"><strong>Visi:</strong> Menjadi Lembaga Pendidikan Tinggi Vokasi yang Unggul dalam Persaingan Global</p>
-                <p class="hero-text"><strong>Misi:</strong></p>
-                <ol style="color: var(--muted); line-height: 1.6; padding-left: 20px; display: grid; gap: 8px;">
+
+                <p class="hero-text" style="margin-bottom: 2px;"><strong>Visi:</strong></p>
+                <p class="hero-text" style="margin-top: 0;">Menjadi Lembaga Pendidikan Tinggi Vokasi yang Unggul dalam Persaingan Global</p>
+
+                <p class="hero-text" style="margin-bottom: 2px;"><strong>Misi:</strong></p>
+                <ol style="line-height: 1.6; padding-left: 20px; display: grid; gap: 12px; margin: 0;">
                     <li>Menyelenggarakan dan Mengembangkan Pendidikan Vokasi yang Berkualitas, Inovatif, dan Berdaya Saing yang Mendorong Pola Pembelajaran Seumur Hidup dan Tumbuhnya Jiwa Kewirausahaan serta Sesuai Kebutuhan Industri, Lembaga Pemerintah, dan Masyarakat.</li>
                     <li>Menyelenggarakan Penelitian Terapan yang Bermanfaat bagi Pengembangan Ilmu Pengetahuan dan Teknologi serta Kesejahteraan Masyarakat.</li>
                     <li>Menyelenggarakan Pengabdian Kepada Masyarakat yang Bermanfaat bagi Kesejahteraan Masyarakat.</li>
@@ -59,6 +63,30 @@
     </div>
 
     <script>
+        (function() {
+            const html = document.documentElement;
+            const toggle = document.getElementById('themeToggle');
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark') {
+                html.setAttribute('data-theme', 'dark');
+                if (toggle) toggle.innerHTML = '&#9728;';
+            }
+            if (toggle) {
+                toggle.addEventListener('click', function() {
+                    const isDark = html.getAttribute('data-theme') === 'dark';
+                    if (isDark) {
+                        html.removeAttribute('data-theme');
+                        localStorage.setItem('theme', 'light');
+                        toggle.innerHTML = '&#9789;';
+                    } else {
+                        html.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('theme', 'dark');
+                        toggle.innerHTML = '&#9728;';
+                    }
+                });
+            }
+        })();
+
         const loginModal = document.getElementById('loginModal');
         const openButtons = document.querySelectorAll('[data-login-modal-open]');
         const closeButton = document.querySelector('[data-login-modal-close]');
