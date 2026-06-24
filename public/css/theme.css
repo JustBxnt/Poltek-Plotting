@@ -153,6 +153,8 @@ body.home-page .gradient-text {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
+    padding-bottom: 0.15em;
+    margin-bottom: -0.15em;
 }
 
 body.home-page .hero-text {
