@@ -18,9 +18,9 @@
                 <a href="{{ route('admin.dashboard') }}">Dashboard</a>
                 <a href="{{ route('admin.buildings.index') }}">Status Gedung</a>
                 <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema">&#9789;</button>
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" id="logoutForm">
                     @csrf
-                    <button type="submit" class="btn-secondary">Keluar</button>
+                    <button type="button" class="btn-secondary" onclick="confirmLogoutToHome(event)">Keluar</button>
                 </form>
             </nav>
         </header>
@@ -36,7 +36,7 @@
             </div>
         </section>
 
-        <section class="info-grid admin-grid">
+        <section class="admin-full-width">
             <div class="card admin-section-card admin-bookings-card">
                 <h3>Form Booking Masuk</h3>
                 <div class="booking-list">
@@ -86,28 +86,68 @@
     </div>
     <script>
         (function() {
-            const html = document.documentElement;
-            const toggle = document.getElementById('themeToggle');
-            const saved = localStorage.getItem('theme');
-            if (saved === 'dark') {
-                html.setAttribute('data-theme', 'dark');
-                if (toggle) toggle.innerHTML = '&#9728;';
-            }
-            if (toggle) {
-                toggle.addEventListener('click', function() {
-                    const isDark = html.getAttribute('data-theme') === 'dark';
-                    if (isDark) {
-                        html.removeAttribute('data-theme');
-                        localStorage.setItem('theme', 'light');
-                        toggle.innerHTML = '&#9789;';
-                    } else {
-                        html.setAttribute('data-theme', 'dark');
-                        localStorage.setItem('theme', 'dark');
-                        toggle.innerHTML = '&#9728;';
-                    }
-                });
-            }
-        })();
-    </script>
+        const html = document.documentElement;
+        const toggle = document.getElementById('themeToggle');
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            if (toggle) toggle.innerHTML = '&#9728;';
+        }
+        if (toggle) {
+            toggle.addEventListener('click', function() {
+                const isDark = html.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    html.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    toggle.innerHTML = '&#9789;';
+                } else {
+                    html.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    toggle.innerHTML = '&#9728;';
+                }
+            });
+        }
+    })();
+
+    window.confirmLogoutToHome = function(event) {
+        event.preventDefault();
+        const logoutModal = document.getElementById('logoutConfirmModal');
+        if (logoutModal) {
+            logoutModal.showModal();
+        }
+    };
+
+    window.closeLogoutModal = function() {
+        const logoutModal = document.getElementById('logoutConfirmModal');
+        if (logoutModal) {
+            logoutModal.close();
+        }
+    };
+
+    window.proceedLogout = function() {
+        const form = document.getElementById('logoutForm');
+        if (form) {
+            form.submit();
+        }
+    };
+</script>
+
+    <!-- Logout Confirmation Modal -->
+    <dialog id="logoutConfirmModal" class="login-modal">
+        <div class="login-modal-header">
+            <div>
+                <div class="modal-eyebrow">Konfirmasi</div>
+                <h2>Keluar ke Beranda?</h2>
+            </div>
+            <button class="modal-close" onclick="closeLogoutModal()">&times;</button>
+        </div>
+        <div class="login-modal-text">
+            Apakah Anda yakin ingin keluar dari sesi aktif dan kembali ke Beranda?
+        </div>
+        <div class="login-modal-actions">
+            <button class="modal-option modal-option-primary" onclick="proceedLogout()">Ya, Keluar</button>
+            <button class="modal-option" onclick="closeLogoutModal()">Batal</button>
+        </div>
+    </dialog>
 </body>
 </html>

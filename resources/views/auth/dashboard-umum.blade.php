@@ -17,12 +17,10 @@
                 <span>Politeknik Negeri Malang</span>
             </a>
             <nav class="nav">
-                <a href="{{ url('/') }}">Beranda</a>
-                <a href="#fasilitas-umum">Fasilitas Umum</a>
                 <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema">&#9789;</button>
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" id="logoutForm">
                     @csrf
-                    <button type="submit" class="btn-secondary">Keluar</button>
+                    <button type="button" class="btn-secondary" onclick="confirmLogoutToHome(event)">Keluar</button>
                 </form>
             </nav>
         </header>
@@ -74,6 +72,46 @@
             });
         }
     })();
+
+    window.confirmLogoutToHome = function(event) {
+        event.preventDefault();
+        const logoutModal = document.getElementById('logoutConfirmModal');
+        if (logoutModal) {
+            logoutModal.showModal();
+        }
+    };
+
+    window.closeLogoutModal = function() {
+        const logoutModal = document.getElementById('logoutConfirmModal');
+        if (logoutModal) {
+            logoutModal.close();
+        }
+    };
+
+    window.proceedLogout = function() {
+        const form = document.getElementById('logoutForm');
+        if (form) {
+            form.submit();
+        }
+    };
 </script>
+
+    <!-- Logout Confirmation Modal -->
+    <dialog id="logoutConfirmModal" class="login-modal">
+        <div class="login-modal-header">
+            <div>
+                <div class="modal-eyebrow">Konfirmasi</div>
+                <h2>Keluar ke Beranda?</h2>
+            </div>
+            <button class="modal-close" onclick="closeLogoutModal()">&times;</button>
+        </div>
+        <div class="login-modal-text">
+            Apakah Anda yakin ingin keluar dari sesi aktif dan kembali ke Beranda?
+        </div>
+        <div class="login-modal-actions">
+            <button class="modal-option modal-option-primary" onclick="proceedLogout()">Ya, Keluar</button>
+            <button class="modal-option" onclick="closeLogoutModal()">Batal</button>
+        </div>
+    </dialog>
 </body>
 </html>

@@ -18,9 +18,9 @@
             </a>
             <nav class="nav">
                 <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema">&#9789;</button>
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" id="logoutForm">
                     @csrf
-                    <button type="submit" class="btn-secondary">Keluar</button>
+                    <button type="button" class="btn-secondary" onclick="confirmLogoutToHome(event)">Keluar</button>
                 </form>
             </nav>
         </header>
@@ -62,7 +62,7 @@
                 <p>Gunakan menu berikut untuk langsung menuju fitur penting kampus.</p>
                 <ul class="detail-list">
                     <li class="detail-item"><strong>Pilih Gedung</strong><span><a href="{{ route('building.choose') }}" class="detail-link">Masuk &#8599;</a></span></li>
-                    <li class="detail-item"><strong>Beranda</strong><span><a href="{{ url('/') }}" class="detail-link">Kembali &#8599;</a></span></li>
+                    <li class="detail-item"><strong>Beranda</strong><span><a href="#" class="detail-link" onclick="confirmLogoutToHome(event)">Kembali &#8599;</a></span></li>
                 </ul>
             </div>
             <div class="card">
@@ -73,7 +73,48 @@
             </div>
         </section>
     </div>
+
+    <!-- Logout Confirmation Modal -->
+    <dialog id="logoutConfirmModal" class="login-modal">
+        <div class="login-modal-header">
+            <div>
+                <div class="modal-eyebrow">Konfirmasi</div>
+                <h2>Keluar ke Beranda?</h2>
+            </div>
+            <button class="modal-close" onclick="closeLogoutModal()">&times;</button>
+        </div>
+        <div class="login-modal-text">
+            Apakah Anda yakin ingin keluar dari sesi aktif dan kembali ke Beranda?
+        </div>
+        <div class="login-modal-actions">
+            <button class="modal-option modal-option-primary" onclick="proceedLogout()">Ya, Keluar</button>
+            <button class="modal-option" onclick="closeLogoutModal()">Batal</button>
+        </div>
+    </dialog>
+
 <script>
+    function confirmLogoutToHome(event) {
+        event.preventDefault();
+        const logoutModal = document.getElementById('logoutConfirmModal');
+        if (logoutModal) {
+            logoutModal.showModal();
+        }
+    }
+
+    function closeLogoutModal() {
+        const logoutModal = document.getElementById('logoutConfirmModal');
+        if (logoutModal) {
+            logoutModal.close();
+        }
+    }
+
+    function proceedLogout() {
+        const form = document.getElementById('logoutForm');
+        if (form) {
+            form.submit();
+        }
+    }
+
     (function() {
         const html = document.documentElement;
         const toggle = document.getElementById('themeToggle');

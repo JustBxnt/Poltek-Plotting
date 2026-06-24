@@ -93,6 +93,10 @@ class LoginController extends Controller
 
     public function showBuildingSelection()
     {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
         $buildings = Building::query()
             ->active()
             ->where('kind', 'building')

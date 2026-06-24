@@ -76,6 +76,9 @@ Route::get('/profile', [LoginController::class, 'showProfile'])->name('profile')
 Route::get('/dashboard/dosen', [LoginController::class, 'showDosenDashboard'])->name('dashboard.dosen');
 Route::get('/pilih-gedung', [LoginController::class, 'showBuildingSelection'])->name('building.choose');
 Route::get('/gedung-aa', function () use ($getActiveBookingDays) {
+    if (!Auth::check()) {
+        return redirect()->route('login');
+    }
     $today = Carbon::today();
     $monthStart = $today->copy()->startOfMonth();
     $daysInMonth = $today->daysInMonth;
@@ -91,6 +94,9 @@ Route::get('/gedung-aa', function () use ($getActiveBookingDays) {
     ]);
 })->name('building.aa');
 Route::get('/gedung-aa/form/{day}', function (int $day) use ($getActiveBookingDays) {
+    if (!Auth::check()) {
+        return redirect()->route('login');
+    }
     $today = Carbon::today();
     $daysInMonth = $today->daysInMonth;
     $usedDays = $getActiveBookingDays();
@@ -135,6 +141,9 @@ Route::post('/gedung-aa/bookings', function (\Illuminate\Http\Request $request) 
 })->name('bookings.store');
 
 Route::get('/gedung/{code}', function (string $code) use ($getBuildingBookingDays) {
+    if (!Auth::check()) {
+        return redirect()->route('login');
+    }
     $building = Building::query()
         ->active()
         ->where('code', strtoupper($code))
@@ -157,6 +166,9 @@ Route::get('/gedung/{code}', function (string $code) use ($getBuildingBookingDay
 })->name('building.show');
 
 Route::get('/gedung/{code}/form/{day}', function (string $code, int $day) use ($getBuildingBookingDays) {
+    if (!Auth::check()) {
+        return redirect()->route('login');
+    }
     $building = Building::query()
         ->active()
         ->where('code', strtoupper($code))
@@ -261,6 +273,9 @@ Route::get('/dashboard/umum', function () use ($ensurePublicFacilities) {
 })->name('dashboard.umum');
 
 Route::get('/fasilitas/{code}', function (string $code) use ($ensurePublicFacilities) {
+    if (!Auth::check()) {
+        return redirect()->route('login');
+    }
     $facility = $ensurePublicFacilities()->firstWhere('code', strtoupper($code));
 
     abort_unless($facility, 404);
@@ -292,6 +307,9 @@ Route::get('/fasilitas/{code}', function (string $code) use ($ensurePublicFacili
 })->name('facility.show');
 
 Route::get('/fasilitas/{code}/form/{day}', function (string $code, int $day) use ($ensurePublicFacilities) {
+    if (!Auth::check()) {
+        return redirect()->route('login');
+    }
     $facility = $ensurePublicFacilities()->firstWhere('code', strtoupper($code));
 
     abort_unless($facility, 404);

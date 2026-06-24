@@ -15,10 +15,12 @@
                 <span>Politeknik Negeri Malang</span>
             </a>
             <nav class="nav">
+                <a href="{{ route('admin.dashboard') }}" class="active">Dashboard</a>
+                <a href="{{ route('admin.buildings.index') }}">Status Gedung</a>
                 <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema">&#9789;</button>
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" id="logoutForm">
                     @csrf
-                    <button type="submit" class="btn-secondary">Keluar</button>
+                    <button type="button" class="btn-secondary" onclick="confirmLogoutToHome(event)">Keluar</button>
                 </form>
             </nav>
         </header>
@@ -99,7 +101,7 @@
                                 : $bookings->where('requester_role', $key);
                             $pending = $total->where('status', 'pending')->count();
                         @endphp
-                        <a href="{{ route($link['route']) }}" class="building-item" style="display: flex; justify-content: space-between; align-items: center;">
+                        <a href="{{ route($link['route']) }}" class="building-item" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; text-align: left;">
                             <div>
                                 <p class="building-name">{{ $link['label'] }}</p>
                                 <p class="building-info">{{ $total->count() }} booking</p>
@@ -137,6 +139,46 @@
             });
         }
     })();
+
+    window.confirmLogoutToHome = function(event) {
+        event.preventDefault();
+        const logoutModal = document.getElementById('logoutConfirmModal');
+        if (logoutModal) {
+            logoutModal.showModal();
+        }
+    };
+
+    window.closeLogoutModal = function() {
+        const logoutModal = document.getElementById('logoutConfirmModal');
+        if (logoutModal) {
+            logoutModal.close();
+        }
+    };
+
+    window.proceedLogout = function() {
+        const form = document.getElementById('logoutForm');
+        if (form) {
+            form.submit();
+        }
+    };
 </script>
+
+    <!-- Logout Confirmation Modal -->
+    <dialog id="logoutConfirmModal" class="login-modal">
+        <div class="login-modal-header">
+            <div>
+                <div class="modal-eyebrow">Konfirmasi</div>
+                <h2>Keluar ke Beranda?</h2>
+            </div>
+            <button class="modal-close" onclick="closeLogoutModal()">&times;</button>
+        </div>
+        <div class="login-modal-text">
+            Apakah Anda yakin ingin keluar dari sesi aktif dan kembali ke Beranda?
+        </div>
+        <div class="login-modal-actions">
+            <button class="modal-option modal-option-primary" onclick="proceedLogout()">Ya, Keluar</button>
+            <button class="modal-option" onclick="closeLogoutModal()">Batal</button>
+        </div>
+    </dialog>
 </body>
 </html>

@@ -17,9 +17,11 @@
                 <span>Politeknik Negeri Malang</span>
             </a>
             <nav class="nav">
-                <a href="{{ url('/') }}">Beranda</a>
-                <a href="{{ route('building.choose') }}">Pilih Gedung</a>
                 <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema">&#9789;</button>
+                <form method="POST" action="{{ route('logout') }}" id="logoutForm">
+                    @csrf
+                    <button type="button" class="btn-secondary" onclick="confirmLogoutToHome(event)">Keluar</button>
+                </form>
             </nav>
         </header>
 
@@ -108,14 +110,24 @@
                                 $dateLabel = $today->copy()->day($day)->translatedFormat('d F Y');
                             @endphp
                             @if ($isUsed)
-                                <div class="calendar-day is-used is-disabled" aria-disabled="true" title="Tanggal tidak tersedia">
+                                <div 
+                                    class="calendar-day is-used {{ $day === 1 ? 'is-selected' : '' }}"
+                                    data-day="{{ $day }}"
+                                    data-date="{{ $dateLabel }}"
+                                    data-status="Digunakan"
+                                    title="Tanggal tidak tersedia"
+                                >
                                     <span class="calendar-day-number">{{ $day }}</span>
                                     <span class="calendar-day-status">Digunakan</span>
                                 </div>
                             @else
                                 <a
-                                    class="calendar-day is-available"
+                                    class="calendar-day is-available {{ $day === 1 ? 'is-selected' : '' }}"
                                     href="{{ route('building.form', ['code' => $building->code, 'day' => $day]) }}"
+                                    data-day="{{ $day }}"
+                                    data-date="{{ $dateLabel }}"
+                                    data-status="Tersedia"
+                                    data-url="{{ route('building.form', ['code' => $building->code, 'day' => $day]) }}"
                                     title="Buka form booking untuk {{ $dateLabel }}"
                                 >
                                     <span class="calendar-day-number">{{ $day }}</span>
@@ -125,6 +137,9 @@
                         @endfor
                     </div>
 
+                    @php
+                        $firstDayIsUsed = in_array(1, $usedDays, true);
+                    @endphp
                     <div class="calendar-summary" id="calendarSummary">
                         <div class="detail-item">
                             <strong>Tanggal Terpilih</strong>
@@ -132,11 +147,21 @@
                         </div>
                         <div class="detail-item">
                             <strong>Status Ruangan</strong>
-                            <span id="selectedStatus">Tersedia</span>
+                            <span id="selectedStatus">{{ $firstDayIsUsed ? 'Digunakan' : 'Tersedia' }}</span>
                         </div>
                         <div class="detail-item">
                             <strong>Lokasi</strong>
                             <span>{{ $building->name }} - {{ $building->info }}</span>
+                        </div>
+                        <div class="calendar-action" style="margin-top: 20px; display: grid;">
+                            <a 
+                                id="bookingActionButton" 
+                                class="btn-primary {{ $firstDayIsUsed ? 'is-disabled' : '' }}" 
+                                @if(!$firstDayIsUsed) href="{{ route('building.form', ['code' => $building->code, 'day' => 1]) }}" @endif
+                                style="width: 100%; justify-content: center; text-align: center; align-items: center; display: inline-flex; {{ $firstDayIsUsed ? 'pointer-events: none;' : '' }}"
+                            >
+                                Lanjutkan Booking
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -167,6 +192,105 @@
             });
         }
     })();
+
+    // Calendar Selection Logic
+    document.addEventListener('DOMContentLoaded', function() {
+        const days = document.querySelectorAll('.calendar-day');
+        const selectedDateSpan = document.getElementById('selectedDate');
+        const selectedStatusSpan = document.getElementById('selectedStatus');
+        const bookingBtn = document.getElementById('bookingActionButton');
+
+        // Style the initial status color
+        if (selectedStatusSpan) {
+            const initialStatus = selectedStatusSpan.textContent.trim();
+            if (initialStatus === 'Digunakan') {
+                selectedStatusSpan.style.color = '#ef4444';
+            } else {
+                selectedStatusSpan.style.color = '#22c55e';
+            }
+        }
+
+        days.forEach(day => {
+            day.addEventListener('click', function(e) {
+                if (day.tagName === 'A') {
+                    e.preventDefault();
+                }
+
+                // Update selected class
+                days.forEach(d => d.classList.remove('is-selected'));
+                day.classList.add('is-selected');
+
+                // Get day details from data attributes
+                const dateLabel = day.getAttribute('data-date');
+                const status = day.getAttribute('data-status');
+                const bookingUrl = day.getAttribute('data-url');
+
+                // Update summary text
+                if (selectedDateSpan) selectedDateSpan.textContent = dateLabel;
+                if (selectedStatusSpan) {
+                    selectedStatusSpan.textContent = status;
+                    if (status === 'Digunakan') {
+                        selectedStatusSpan.style.color = '#ef4444';
+                    } else {
+                        selectedStatusSpan.style.color = '#22c55e';
+                    }
+                }
+
+                // Update booking button
+                if (bookingBtn) {
+                    if (status === 'Tersedia' && bookingUrl) {
+                        bookingBtn.href = bookingUrl;
+                        bookingBtn.classList.remove('is-disabled');
+                        bookingBtn.style.pointerEvents = 'auto';
+                    } else {
+                        bookingBtn.removeAttribute('href');
+                        bookingBtn.classList.add('is-disabled');
+                        bookingBtn.style.pointerEvents = 'none';
+                    }
+                }
+            });
+        });
+    });
+
+    window.confirmLogoutToHome = function(event) {
+        event.preventDefault();
+        const logoutModal = document.getElementById('logoutConfirmModal');
+        if (logoutModal) {
+            logoutModal.showModal();
+        }
+    };
+
+    window.closeLogoutModal = function() {
+        const logoutModal = document.getElementById('logoutConfirmModal');
+        if (logoutModal) {
+            logoutModal.close();
+        }
+    };
+
+    window.proceedLogout = function() {
+        const form = document.getElementById('logoutForm');
+        if (form) {
+            form.submit();
+        }
+    };
 </script>
+
+    <!-- Logout Confirmation Modal -->
+    <dialog id="logoutConfirmModal" class="login-modal">
+        <div class="login-modal-header">
+            <div>
+                <div class="modal-eyebrow">Konfirmasi</div>
+                <h2>Keluar ke Beranda?</h2>
+            </div>
+            <button class="modal-close" onclick="closeLogoutModal()">&times;</button>
+        </div>
+        <div class="login-modal-text">
+            Apakah Anda yakin ingin keluar dari sesi aktif dan kembali ke Beranda?
+        </div>
+        <div class="login-modal-actions">
+            <button class="modal-option modal-option-primary" onclick="proceedLogout()">Ya, Keluar</button>
+            <button class="modal-option" onclick="closeLogoutModal()">Batal</button>
+        </div>
+    </dialog>
 </body>
 </html>

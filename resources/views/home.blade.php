@@ -16,7 +16,6 @@
             </a>
             <nav class="nav">
                 <a href="#" class="active">Beranda</a>
-                <a href="{{ route('visi-misi') }}">Visi & Misi</a>
                 <a href="#" class="login-btn" data-login-modal-open>Login</a>
                 <button type="button" class="theme-toggle" id="themeToggle" aria-label="Ganti tema">&#9789;</button>
             </nav>
@@ -30,7 +29,7 @@
                 
                 <div class="hero-actions">
                     <button class="btn-cta primary" data-login-modal-open>Mulai Booking Sekarang</button>
-                    <a href="{{ route('visi-misi') }}" class="btn-cta secondary">Lihat Visi & Misi</a>
+                    <button type="button" class="btn-cta secondary" data-visi-modal-open>Lihat Visi & Misi</button>
                 </div>
 
                 <div class="hero-stats">
@@ -49,7 +48,7 @@
                 </div>
             </div>
             
-            <div class="hero-visual">
+            <div class="hero-visual-home">
                 <div class="slideshow-container">
                     <div class="hero-slideshow" aria-label="Foto fasilitas kampus">
                         <div class="hero-slide is-active">
@@ -106,9 +105,40 @@
             </div>
             <p class="login-modal-text">Silakan pilih jenis login yang sesuai dengan akun Anda.</p>
             <div class="login-modal-actions">
-                <a href="{{ route('login.mahasiswa') }}" class="modal-option modal-option-primary">Mahasiswa</a>
+                <a href="{{ route('login.mahasiswa') }}" class="modal-option">Mahasiswa</a>
                 <a href="{{ route('login.dosen') }}" class="modal-option">Dosen</a>
                 <a href="{{ route('login.umum') }}" class="modal-option">Umum</a>
+            </div>
+        </dialog>
+
+        <!-- Visi & Misi Modal -->
+        <dialog class="login-modal visi-modal" id="visiModal" aria-labelledby="visiModalTitle">
+            <div class="login-modal-header">
+                <div>
+                    <p class="modal-eyebrow">Politeknik Negeri Malang</p>
+                    <h2 id="visiModalTitle">Visi & Misi</h2>
+                </div>
+                <button type="button" class="modal-close" data-visi-modal-close aria-label="Tutup popup">&times;</button>
+            </div>
+            <div class="visi-modal-content" style="margin-top: 20px; text-align: left; max-height: 60vh; overflow-y: auto; padding-right: 8px;">
+                <h3 style="font-size: 1.15rem; color: var(--accent); margin-bottom: 8px; font-weight: 700;">Visi</h3>
+                <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text); margin-bottom: 20px;">
+                    Menjadi Lembaga Pendidikan Tinggi Vokasi yang Unggul dalam Persaingan Global.
+                </p>
+                
+                <h3 style="font-size: 1.15rem; color: var(--accent); margin-bottom: 8px; font-weight: 700;">Misi</h3>
+                <ol style="font-size: 0.95rem; line-height: 1.6; color: var(--text); padding-left: 20px; display: grid; gap: 10px; margin: 0 0 20px 0;">
+                    <li>Menyelenggarakan dan Mengembangkan Pendidikan Vokasi yang Berkualitas, Inovatif, dan Berdaya Saing yang Mendorong Pola Pembelajaran Seumur Hidup dan Tumbuhnya Jiwa Kewirausahaan serta Sesuai Kebutuhan Industri, Lembaga Pemerintah, dan Masyarakat.</li>
+                    <li>Menyelenggarakan Penelitian Terapan yang Bermanfaat bagi Pengembangan Ilmu Pengetahuan dan Teknologi serta Kesejahteraan Masyarakat.</li>
+                    <li>Menyelenggarakan Pengabdian Kepada Masyarakat yang Bermanfaat bagi Kesejahteraan Masyarakat.</li>
+                    <li>Menyelenggarakan Sistem Pengelolaan Pendidikan dengan Berdasar pada Prinsip-prinsip Tatapamong yang Baik.</li>
+                    <li>Mengembangkan Kerjasama yang Saling Menguntungkan dengan Berbagai Pihak, baik di Dalam maupun di Luar Negeri pada Bidang-bidang yang Relevan.</li>
+                </ol>
+
+                <h3 style="font-size: 1.15rem; color: var(--accent); margin-bottom: 8px; font-weight: 700;">Tentang</h3>
+                <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0;">
+                    Politeknik Negeri Malang berkomitmen untuk menjadi lembaga pendidikan vokasi terdepan dalam persaingan global melalui pendidikan berkualitas, penelitian terapan, dan pengabdian kepada masyarakat.
+                </p>
             </div>
         </dialog>
     </div>
@@ -173,6 +203,36 @@
 
             if (clickedOutside) {
                 loginModal.close();
+            }
+        });
+
+        // Visi & Misi Modal Script
+        const visiModal = document.getElementById('visiModal');
+        const openVisiButtons = document.querySelectorAll('[data-visi-modal-open]');
+        const closeVisiButton = document.querySelector('[data-visi-modal-close]');
+
+        openVisiButtons.forEach((button) => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (typeof visiModal.showModal === 'function') {
+                    visiModal.showModal();
+                }
+            });
+        });
+
+        closeVisiButton?.addEventListener('click', () => visiModal.close());
+
+        visiModal?.addEventListener('click', (event) => {
+            const dialogRect = visiModal.getBoundingClientRect();
+            const clickedOutside = (
+                event.clientX < dialogRect.left ||
+                event.clientX > dialogRect.right ||
+                event.clientY < dialogRect.top ||
+                event.clientY > dialogRect.bottom
+            );
+
+            if (clickedOutside) {
+                visiModal.close();
             }
         });
     </script>

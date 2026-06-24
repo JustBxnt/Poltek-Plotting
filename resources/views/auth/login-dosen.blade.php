@@ -25,14 +25,15 @@
             <input type="hidden" name="role" value="dosen">
             <div class="form-group">
                 <label for="email">Email / No Hp</label>
-                <input type="email" id="email" name="email" value="{{ old('email') }}" required>
+                <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="Masukkan email / no hp">
             </div>
             <div class="form-group">
                 <label for="password">NIP</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" required placeholder="Masukkan NIP">
             </div>
             <button type="submit" class="btn">Login</button>
         </form>
+        <a href="{{ url('/') }}" class="back-link">← Kembali ke Beranda</a>
     </div>
 </body>
 </html>

@@ -28,7 +28,7 @@
             
             <div class="form-group">
                 <label for="email">Email / No Hp</label>
-                <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="Masukkan email">
+                <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="Masukkan email / no hp">
             </div>
 
             <div class="form-group">
@@ -38,6 +38,7 @@
 
             <button type="submit" class="btn">Login</button>
         </form>
+        <a href="{{ url('/') }}" class="back-link">← Kembali ke Beranda</a>
     </div>
 </body>
 </html>
