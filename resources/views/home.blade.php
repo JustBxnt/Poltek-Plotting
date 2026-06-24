@@ -23,32 +23,76 @@
         </div>
 
         <section class="hero">
-            <div class="hero-card">
-                <h1 class="hero-title">Selamat Datang di Sistem Informasi Kampus</h1>
-                <p class="hero-text">Politeknik Negeri Malang menyediakan sarana dan prasarana yang dapat digunakan untuk berbagai acara kampus maupun umum. Hal ini meliputi ruang rapat yang terdapat pada gedung-gedung kampus serta fasilitas yang tersedia di tiap ruangan.</p>
-                <div class="hero-slideshow" aria-label="Foto fasilitas kampus">
-                    <div class="hero-slide is-active">
-                        <img src="{{ asset('images/SELASAR GRAPOL.jpg') }}" alt="Selasar Graha Polinema">
+            <div class="hero-content">
+                <div class="hero-badge">✨ Sistem Plotting & Booking Sarpras</div>
+                <h1 class="hero-title">Sistem Peminjaman <span class="gradient-text">Gedung & Ruangan</span></h1>
+                <p class="hero-text">Politeknik Negeri Malang menyediakan sarana dan prasarana terbaik yang siap digunakan untuk menunjang berbagai kegiatan akademik, kemahasiswaan, maupun acara umum. Cek ketersediaan ruang secara real-time dan ajukan peminjaman dengan mudah.</p>
+                
+                <div class="hero-actions">
+                    <button class="btn-cta primary" data-login-modal-open>Mulai Booking Sekarang</button>
+                    <a href="{{ route('visi-misi') }}" class="btn-cta secondary">Lihat Visi & Misi</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">12+</span>
+                        <span class="stat-label">Gedung Utama</span>
                     </div>
-                    <div class="hero-slide">
-                        <img src="{{ asset('images/GRAPOL DALAM.jpeg') }}" alt="Interior Graha Polinema">
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Ruang Rapat & Aula</span>
                     </div>
-                    <div class="hero-slide">
-                        <img src="{{ asset('images/GRATER.jpeg') }}" alt="Graha Polinema area depan">
-                    </div>
-                    <div class="hero-slide">
-                        <img src="{{ asset('images/MASJID DALAM.jpeg') }}" alt="Bagian dalam masjid kampus">
-                    </div>
-                    <div class="hero-slide">
-                        <img src="{{ asset('images/MASJID TAMPAK ATAS.jpeg') }}" alt="Masjid kampus tampak atas">
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Proses Online</span>
                     </div>
                 </div>
             </div>
-            <div class="info-panel">
-                <div class="panel">
-                    <h3>Informasi Kampus</h3>
-                    <p>Politeknik Negeri Malang menyediakan sarana dan prasarana yang dapat digunakan untuk berbagai acara kampus maupun umum. Hal ini meliputi ruang rapat yang terdapat pada gedung-gedung kampus serta fasilitas yang tersedia di tiap ruangan.</p>
+            
+            <div class="hero-visual">
+                <div class="slideshow-container">
+                    <div class="hero-slideshow" aria-label="Foto fasilitas kampus">
+                        <div class="hero-slide is-active">
+                            <img src="{{ asset('images/SELASAR GRAPOL.jpg') }}" alt="Selasar Graha Polinema">
+                            <div class="slide-caption">Selasar Graha Polinema</div>
+                        </div>
+                        <div class="hero-slide">
+                            <img src="{{ asset('images/GRAPOL DALAM.jpeg') }}" alt="Interior Graha Polinema">
+                            <div class="slide-caption">Interior Graha Polinema</div>
+                        </div>
+                        <div class="hero-slide">
+                            <img src="{{ asset('images/GRATER.jpeg') }}" alt="Graha Polinema area depan">
+                            <div class="slide-caption">Graha Polinema Area Depan</div>
+                        </div>
+                        <div class="hero-slide">
+                            <img src="{{ asset('images/MASJID DALAM.jpeg') }}" alt="Bagian dalam masjid kampus">
+                            <div class="slide-caption">Interior Masjid Al-Taqwa</div>
+                        </div>
+                        <div class="hero-slide">
+                            <img src="{{ asset('images/MASJID TAMPAK ATAS.jpeg') }}" alt="Masjid kampus tampak atas">
+                            <div class="slide-caption">Masjid Kampus Polinema</div>
+                        </div>
+                    </div>
+                    <div class="slideshow-glow"></div>
                 </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="feature-card">
+                <div class="feature-icon">🏫</div>
+                <h3>Peminjaman Ruangan</h3>
+                <p>Akses ke berbagai aula, ruang rapat, dan gedung serbaguna untuk keperluan acara akademik maupun non-akademik.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3>Jadwal Real-Time</h3>
+                <p>Sistem plotting yang terintegrasi memungkinkan Anda melihat ketersediaan ruangan secara langsung dan instan.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Proses Digital</h3>
+                <p>Pengajuan surat izin dan verifikasi status peminjaman secara transparan dari pihak administrasi kampus.</p>
             </div>
         </section>
 

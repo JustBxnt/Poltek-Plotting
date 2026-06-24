@@ -47,20 +47,11 @@ body {
 
 /* --- 2. HOME PAGE SPECIFIC (Gaya dengan Background Gambar) --- */
 body.home-page {
-    background: linear-gradient(135deg, rgba(0, 56, 38, 0.65), rgba(30, 58, 138, 0.65)),
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.82), rgba(17, 24, 39, 0.82)),
                 url('../../images/campus.jpg') no-repeat center center/cover;
     background-attachment: fixed;
     color: white;
 }
-
-body.home-page .page {
-    max-width: none;
-    padding: 24px 48px;
-}
-
-
-
-
 
 body.login-page {
     background: linear-gradient(135deg, rgba(15, 23, 42, 0.58), rgba(37, 99, 235, 0.34)),
@@ -68,77 +59,232 @@ body.login-page {
     background-attachment: fixed;
 }
 
+body.home-page .page {
+    max-width: 1400px;
+    padding: 30px 60px;
+}
+
 body.home-page .topbar {
-    background: var(--surface);
-    backdrop-filter: blur(16px);
-    border: 1px solid var(--border);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    margin-bottom: 50px;
 }
 
-body.home-page .hero-card,
-body.home-page .panel,
-body.home-page .panel-list-item {
-    background: var(--surface);
-    backdrop-filter: blur(24px) saturate(150%);
-    border: 1px solid var(--border);
-    color: var(--text);
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+[data-theme="dark"] body.home-page .topbar {
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-body.home-page .hero-card:hover,
-body.home-page .panel:hover {
-    transform: translateY(-6px);
-    border-color: rgba(99, 102, 241, 0.35);
-    box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.15);
+body.home-page .brand span {
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    font-size: 1.15rem;
 }
 
+body.home-page .nav a {
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+body.home-page .nav a:hover,
+body.home-page .nav a.active {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+body.home-page .nav a.active {
+    border-bottom: 2px solid #ffffff;
+}
+
+body.home-page .login-btn {
+    background: #ffffff;
+    color: #0f172a !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.home-page .login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px rgba(255, 255, 255, 0.2);
+}
+
+/* --- HERO GRID --- */
 body.home-page .hero {
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+    margin-bottom: 60px;
 }
 
-body.home-page .hero-card {
-    align-self: flex-start;
+body.home-page .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+body.home-page .hero-badge {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #60a5fa;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 body.home-page .hero-title {
-    max-width: none;
-    font-size: clamp(2rem, 3vw, 2.8rem);
-    line-height: 1.02;
-    margin-bottom: 18px;
+    font-size: clamp(2.5rem, 4.5vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+
+body.home-page .gradient-text {
+    background: linear-gradient(135deg, #3b82f6, #60a5fa, #93c5fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
 }
 
 body.home-page .hero-text {
-    max-width: 64ch;
-    line-height: 1.55;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 540px;
 }
 
-body.home-page .hero-card {
+body.home-page .hero-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
+}
+
+body.home-page .btn-cta {
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+body.home-page .btn-cta.primary {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #ffffff !important;
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+}
+
+body.home-page .btn-cta.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(59, 130, 246, 0.6);
+}
+
+body.home-page .btn-cta.secondary {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+}
+
+body.home-page .btn-cta.secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+}
+
+/* --- STATS CARD --- */
+body.home-page .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 20px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+}
+
+body.home-page .stat-item {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 6px;
+}
+
+body.home-page .stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #60a5fa;
+    line-height: 1;
+}
+
+body.home-page .stat-label {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
+
+/* --- HERO VISUAL (SLIDESHOW WINDOW) --- */
+body.home-page .hero-visual {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+body.home-page .slideshow-container {
+    position: relative;
+    width: 100%;
+    max-width: 580px;
+    aspect-ratio: 16 / 10;
+    border-radius: 32px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+    transform: perspective(1000px) rotateY(-5deg);
+    transition: all 0.5s ease;
+}
+
+body.home-page .slideshow-container:hover {
+    transform: perspective(1000px) rotateY(0deg) translateY(-5px);
+    box-shadow: 0 35px 70px rgba(59, 130, 246, 0.15);
 }
 
 body.home-page .hero-slideshow {
-    width: min(100%, 340px);
-    max-width: 340px;
-    aspect-ratio: 4 / 3;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    aspect-ratio: auto;
     position: relative;
     overflow: hidden;
     border-radius: 24px;
-    background: #e2e8f0;
-    box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.22), 0 18px 36px rgba(15, 23, 42, 0.14);
+    background: #0f172a;
+    box-shadow: none;
 }
 
 body.home-page .hero-slide {
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 0.7s ease;
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1.05);
 }
 
 body.home-page .hero-slide.is-active {
     opacity: 1;
+    transform: scale(1);
 }
 
 body.home-page .hero-slide img {
@@ -149,24 +295,121 @@ body.home-page .hero-slide img {
     object-position: center;
 }
 
-@media (max-width: 1024px) {
-    body.home-page .hero-slideshow {
-        width: min(100%, 300px);
-        max-width: 300px;
+/* SLIDE CAPTIONS */
+body.home-page .slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.85), transparent);
+    padding: 30px 20px 20px;
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    transform: translateY(10px);
+    transition: all 0.5s ease;
+    opacity: 0;
+}
+
+body.home-page .hero-slide.is-active .slide-caption {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+body.home-page .slideshow-glow {
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent 70%);
+    z-index: -1;
+    filter: blur(30px);
+    pointer-events: none;
+}
+
+/* --- FEATURES SECTION --- */
+body.home-page .features-section {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+body.home-page .feature-card {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 35px 30px;
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.home-page .feature-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(96, 165, 250, 0.3);
+    box-shadow: 0 25px 45px rgba(59, 130, 246, 0.15);
+}
+
+body.home-page .feature-icon {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+body.home-page .feature-card h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+body.home-page .feature-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+@media (max-width: 1200px) {
+    body.home-page .hero {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+    
+    body.home-page .hero-content {
+        align-items: center;
+        text-align: center;
+    }
+    
+    body.home-page .hero-text {
+        max-width: 100%;
+    }
+    
+    body.home-page .hero-stats {
+        justify-content: center;
+    }
+    
+    body.home-page .slideshow-container {
+        transform: none;
+        max-width: 100%;
+    }
+    
+    body.home-page .slideshow-container:hover {
+        transform: translateY(-5px);
     }
 }
 
-@media (max-width: 640px) {
-    body.home-page .hero-slideshow {
-        width: 100%;
-        max-width: none;
+@media (max-width: 900px) {
+    body.home-page .page {
+        padding: 20px;
     }
-}
-
-body.home-page .hero-text, 
-body.home-page .panel p, 
-body.home-page .panel-list-item p {
-    color: var(--text);
+    
+    body.home-page .features-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
 }
 
 /* --- 3. LAYOUT & TOPBAR --- */
